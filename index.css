@@ -1,0 +1,320 @@
+/*
+  Root-level custom properties act like design tokens.
+  Updating a color or dimension here flows through the entire stylesheet.
+*/
+:root {
+  color-scheme: light;
+  --bg: #f5f7fb;
+  --surface: #ffffff;
+  --surface-alt: #eef1f8;
+  --border: #d8deeb;
+  --text: #1f2742;
+  --muted: #556080;
+  --accent: #3d5afe;
+  --accent-dark: #3148d2;
+  --radius-lg: 18px;
+  --radius-sm: 10px;
+  --shadow-soft: 0 18px 40px -25px rgba(23, 42, 112, 0.35);
+  --shadow-raised: 0 18px 45px -20px rgba(31, 58, 148, 0.23);
+}
+
+/* Apply a universal box model so padding and borders are easier to reason about */
+* {
+  box-sizing: border-box;
+}
+
+/*
+  Body styles establish the global font, background, and center the app vertically.
+  The extra padding keeps the layout breathing on large monitors.
+*/
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont,
+    sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 24px 64px;
+}
+
+/*
+  app-shell constrains the maximum width and stacks the header, form, and table
+  with consistent spacing.
+*/
+.app-shell {
+  width: min(960px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Center-align the header text to make the welcome message feel friendly */
+.app-header {
+  text-align: center;
+}
+
+/* Responsive font sizing keeps the title readable on both desktop and mobile */
+.app-header h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  font-weight: 700;
+}
+
+/* Subtitle uses the muted color so it supports the title without competing */
+.subtitle {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+/*
+  entry-card and log-card share the same �card� styling: white background,
+  rounded corners, and soft shadow to lift them off the page.
+*/
+.entry-card,
+.log-card {
+  background: var(--surface);
+  padding: 28px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Slightly stronger shadow on the entry card draws attention to the form */
+.entry-card {
+  box-shadow: var(--shadow-raised);
+}
+
+/* Card titles use a uniform style across the form and table sections */
+.card-title {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+/*
+  The form is a two-column CSS grid on wider screens for efficient use of space.
+  Each input stretches to fill its column.
+*/
+.expense-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+/* Labels stack their text caption and input field vertically */
+.expense-form .field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Muted, bold label text creates a clear visual hierarchy */
+.expense-form .field-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/*
+  field-input allows us to place the currency symbol inside the number box
+  without interfering with the actual input element.
+*/
+.field-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* The dollar sign floats inside the amount field as a visual cue */
+.field-input .currency {
+  position: absolute;
+  left: 14px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/*
+  Inputs and selects share the same appearance for a cohesive look.
+  Using the alternate surface color differentiates them from the card.
+*/
+.expense-form input,
+.expense-form select {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  font-size: 1rem;
+  background: var(--surface-alt);
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  color: var(--muted);
+}
+
+/* Extra left padding keeps the typed amount from overlapping the currency symbol */
+.field-input input {
+  padding-left: 32px;
+}
+
+/* Focus styles improve accessibility by showing a clear active state */
+.expense-form input:focus,
+.expense-form select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(61, 90, 254, 0.18);
+  outline: none;
+}
+
+/*
+  Submit button spans the full width of the grid and uses a gradient accent
+  to feel clickable.
+*/
+.submit-btn {
+  grid-column: 1 / -1;
+  padding: 16px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), #536dfe);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+/* Hover and active states provide immediate feedback as the user interacts */
+.submit-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 30px -18px rgba(61, 90, 254, 0.9);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Log header keeps the title and helper text aligned side by side */
+.log-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Helper text uses the muted color to avoid fighting with the main title */
+.log-hint {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* The wrapper enables horizontal scrolling if the table gets too wide */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/*
+  The table is wide enough to prevent cramped columns and uses collapsed borders
+  so rows merge cleanly.
+*/
+#expense-log {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+/* Table head row gets a subtle background to separate it from the data rows */
+#expense-log thead tr {
+  background: var(--surface-alt);
+}
+
+/*
+  Padding keeps the content readable, while the border-bottom creates
+  clear row separation.
+*/
+#expense-log th,
+#expense-log td {
+  text-align: left;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+}
+
+/* Allow long descriptions to wrap instead of blowing out the layout */
+#expense-log td {
+  overflow-wrap: anywhere;
+}
+
+/* Column headers use uppercase and extra letter spacing for readability */
+#expense-log th {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Row hover effect acts like a highlight when users scan the table */
+#expense-log tbody tr:hover {
+  background: rgba(61, 90, 254, 0.04);
+}
+
+/* Empty-state row centers the message and italicizes it for differentiation */
+#expense-log tbody .empty td {
+  text-align: center;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* Amount column aligns numbers to the right so decimals line up */
+.amount-col {
+  text-align: right;
+}
+
+/* Tabular numbers make the digits line up vertically for easier comparison */
+#expense-log td.amount-col {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+/*
+  Responsive tweaks: collapse the grid into a single column on narrow screens
+  and reduce padding so the layout stays comfortable on mobile.
+*/
+@media (max-width: 720px) {
+  body {
+    padding: 32px 16px 48px;
+    align-items: flex-start;
+  }
+
+  .expense-form {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  #expense-log {
+    min-width: 100%;
+  }
+}
+
+@media (max-height: 760px) {
+  body {
+    align-items: flex-start;
+    padding-top: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .entry-card,
+  .log-card {
+    padding: 22px;
+  }
+
+  .submit-btn {
+    padding: 14px;
+  }
+}

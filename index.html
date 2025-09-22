@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <!--
+      The outer shell wraps the entire page so we can center the app
+      in the viewport and keep spacing consistent on different screens.
+    -->
+    <div class="app-shell">
+      <!--
+        Header introduces the app and puts the title front and center.
+        The subtitle nudges the user toward the value of tracking expenses.
+      -->
+      <header class="app-header">
+        <h1>Expense Tracker</h1>
+      </header>
+
+      <!--
+        Entry card contains the form users complete to add a new expense.
+        Keeping it in its own section makes it easier to style like a card.
+      -->
+      <section class="entry-card">
+        <h2 class="card-title">Add Expense</h2>
+
+        <!--
+          The form groups three inputs:
+          - Amount: numeric value for the expense
+          - Description: short text describing what was purchased
+          - Category: dropdown so we can bucket expenses later
+          The form layout is a CSS grid to keep inputs aligned.
+        -->
+        <form id="expense-form" class="expense-form" autocomplete="off">
+          <!-- Amount field with a currency prefix for clarity -->
+          <label class="field">
+            <span class="field-label">Amount</span>
+            <div class="field-input">
+              <span class="currency">$</span>
+              <input
+                type="number"
+                min="0"
+                step="1"
+                inputmode="decimal"
+                placeholder="0.00"
+                id="expense-amount"
+                required
+              />
+            </div>
+          </label>
+
+          <!-- Category dropdown lets the user classify the expense -->
+          <label class="field">
+            <span class="field-label">Category</span>
+            <select id="expense-category" required>
+              <option value="" disabled selected>Choose category</option>
+              <option value="Food">Food</option>
+              <option value="Social">Social</option>
+              <option value="Sports & Health">Sports & Health</option>
+              <option value="Clothing">Clothing</option>
+              <option value="Transportation">Transportation</option>
+              <option value="Internet">Internet</option>
+              <option value="Hair">Hair</option>
+              <option value="Others">Others</option>
+            </select>
+          </label>
+
+          <!-- Description field collects context about the expense -->
+          <label class="field">
+            <span class="field-label">Description</span>
+            <input
+              type="text"
+              id="expense-description"
+              placeholder="e.g. Grocery run, rent payment"
+              maxlength="120"
+              required
+            />
+          </label>
+
+          <!-- Submit button will later trigger JavaScript to add a table row -->
+          <button type="submit" class="submit-btn">Add to log</button>
+        </form>
+      </section>
+
+      <!--
+        Expense log displays a history of every expense added via the form.
+        The hint reminds learners that new rows should appear at the top.
+      -->
+      <section class="log-card">
+        <div class="log-header">
+          <h2 class="card-title">Expense Log</h2>
+        </div>
+
+        <!--
+          Wrapping the table lets us add horizontal scrolling on narrow screens.
+          The table starts with a placeholder row so the empty state feels polished.
+        -->
+        <div class="table-wrapper">
+          <table id="expense-log">
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Category</th>
+                <th scope="col">Description</th>
+                <th scope="col" class="amount-col">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="empty">
+                <td colspan="4">No expenses logged yet.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!--
+      script.js will handle form submission and table updates.
+      We defer loading so HTML and CSS render before the script runs.
+    -->
+    <script src="script.js" defer></script>
+  </body>
+</html>
