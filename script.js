@@ -17,7 +17,7 @@ if (
   // Formatter that turns raw numbers into locale-aware dollars (e.g. 12.5 -> $12.50).
   const currencyFormatter = new Intl.NumberFormat(undefined, {
     style: 'currency',
-    currency: 'USD',
+    currency: 'NTD',
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
