@@ -119,9 +119,10 @@
     </div>
 
     <!--
-      script.js will handle form submission and table updates.
-      We defer loading so HTML and CSS render before the script runs.
+      Load configuration first, then the main script.
+      Config contains sensitive data and should not be committed to git.
     -->
+    <script src="config.js"></script>
     <script src="script.js" defer></script>
   </body>
 </html>
